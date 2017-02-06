@@ -1,0 +1,39 @@
+#Store {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+}
+
+#Store .Item {
+  background-color: #f7f7f7;
+  display: flex;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#Store .Item img {
+  width: 200px;
+  background-color: #fff;
+}
+
+#Store .Item .info {
+  padding-left: 15px;
+}
+
+#Store .Item h2 {
+  margin-top: 0;
+}
+
+#Store .Item button {
+  color: #fff;
+  background-color: #ff4081;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  border: none;
+  height: 36px;
+  padding: 0 16px;
+  min-width: 64px;
+  text-transform: uppercase;
+  cursor: pointer;
+}

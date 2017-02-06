@@ -4,6 +4,7 @@ import {
   getTotalPriceInCart,
   getFormattedPhoneNumber,
   getFormattedCreditCardNumber,
+  getItems,
 } from './selectors';
 
 describe('getTotalPricePerItem(state, item)', () => {
@@ -101,5 +102,45 @@ describe('getFormattedCreditCardNumber(state)', () => {
     };
     const result = getFormattedCreditCardNumber(state);
     expect(result).toEqual('1234 5678 9');
+  });
+});
+
+describe('getItems(state)', () => {
+  it('returns the items as an array of item objects', () => {
+    const state = {
+      items: {
+        'o2fXhV': {
+          name: 'Hubble',
+          price: 14,
+          img: 'http://solarsystem.nasa.gov/images/missions/galpic_hubble1.png',
+          description: "The Hubble Space Telescope...",
+        },
+        'N0CEFy': {
+          name: 'Curiosity',
+          price: 2.6,
+          img: 'http://solarsystem.nasa.gov/images/missions/galpic_msl1.png',
+          description: "Curiosity is a car-sized robotic rover exploring...",
+        },
+      },
+    };
+
+    const result = getItems(state);
+
+    expect(result).toEqual([
+      {
+        itemId: 'o2fXhV',
+        name: 'Hubble',
+        price: 14,
+        img: 'http://solarsystem.nasa.gov/images/missions/galpic_hubble1.png',
+        description: "The Hubble Space Telescope...",
+      },
+      {
+        itemId: 'N0CEFy',
+        name: 'Curiosity',
+        price: 2.6,
+        img: 'http://solarsystem.nasa.gov/images/missions/galpic_msl1.png',
+        description: "Curiosity is a car-sized robotic rover exploring...",
+      },
+    ]);
   });
 });

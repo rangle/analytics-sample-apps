@@ -29,3 +29,9 @@ export function getFormattedCreditCardNumber(state) {
     index % 4 === 0 && index > 0 ? `${formattedNumber} ${n}` : `${formattedNumber}${n}`
   , '');
 }
+
+export function getItems(state) {
+  return Object.keys(state.items).map(itemId =>
+    Object.assign({}, state.items[itemId], { itemId })
+  );
+}
