@@ -3,8 +3,8 @@ import { Button } from './Button';
 import './Cart.css';
 
 export function Cart({ total, itemsInCart, handleCheckout }) {
-  const items = itemsInCart.map(item => (
-    <div className="shopping-cart-item">
+  const items = itemsInCart.map((item, index) => (
+    <div className="shopping-cart-item" key={index}>
       {item.quantity} {item.name}'s at ${item.price} per {item.name}
     </div>
   ));

@@ -56,14 +56,14 @@ describe('getPaymentFormData(state)', () => {
       name: 'John Smith',
       email: 'john.smith@gmail.com',
       phoneNumber: 1234567890,
-      ccNumber: 440088000,
+      ccNumber: 44008800,
     };
     const result = getPaymentFormData(state);
     expect(result).toEqual({
       name: 'John Smith',
       email: 'john.smith@gmail.com',
-      phoneNumber: 1234567890,
-      ccNumber: 440088000,
+      phoneNumber: '(123)-456-7890',
+      ccNumber: '4400 8800',
     });
   });
 });

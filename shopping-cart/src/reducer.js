@@ -20,7 +20,7 @@ const initialState = {
     'ANs1tM': {
       name: 'Cassini',
       price: 3.3,
-      img: 'http://solarsystem.nasa.gov/missions/cassini',
+      img: 'http://solarsystem.nasa.gov/images/missions/galpic_cassini1.png',
       description: `Cassini-Huygens is one of the most ambitious
       missions ever launched into space. Loaded with an array of
       powerful instruments and cameras, the spacecraft is capable of
@@ -53,11 +53,11 @@ export function reducer(state = initialState, action) {
       return update({ email: action.payload.toLowerCase() });
     case PHONE_NUMBER_ENTERED: {
       const phoneNumber = parseInt(action.payload.split('').reduce((result, value) =>
-        !isNaN(value) ? result + value : result, ''));
+        !isNaN(value) ? result + value : result, ''), 10);
       return update({ phoneNumber });
     }
     case CREDIT_CARD_NUMBER_ENTERED:
-      return update({ ccNumber: parseInt(action.payload.replace(' ', '')) });
+      return update({ ccNumber: parseInt(action.payload.replace(' ', ''), 10) });
     default:
       return state;
   }

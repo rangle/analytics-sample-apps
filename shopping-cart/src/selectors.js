@@ -50,8 +50,8 @@ export function getPaymentFormData(state) {
   return {
     name,
     email,
-    phoneNumber,
-    ccNumber,
+    phoneNumber: getFormattedPhoneNumber(state),
+    ccNumber: getFormattedCreditCardNumber(state),
   };
 }
 
