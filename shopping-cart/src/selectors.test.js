@@ -6,7 +6,67 @@ import {
   getFormattedCreditCardNumber,
   getItems,
   getNumItemsInCart,
+  getPaymentFormData,
+  getItemsInCart,
 } from './selectors';
+
+describe('getItemsInCart(state)', () => {
+  it('returns the items in the cart', () => {
+    const state = {
+      cart: ['o2fXhV', 'N0CEFy', 'o2fXhV'],
+      items: {
+        'o2fXhV': {
+          name: 'Hubble',
+          price: 14,
+          img: 'http://solarsystem.nasa.gov/images/missions/galpic_hubble1.png',
+          description: "The Hubble Space Telescope is a space telescope...",
+        },
+        'N0CEFy': {
+          name: 'Curiosity',
+          price: 2.6,
+          img: 'http://solarsystem.nasa.gov/images/missions/galpic_msl1.png',
+          description: "Curiosity is a car-sized robotic rover exploring...",
+        },
+      },
+    };
+
+    const result = getItemsInCart(state);
+
+    expect(result).toEqual([
+      {
+        itemId: 'o2fXhV',
+        name: 'Hubble',
+        price: 14,
+        quantity: 2,
+      },
+      {
+        itemId: 'N0CEFy',
+        name: 'Curiosity',
+        price: 2.6,
+        quantity: 1,
+      },
+    ]);
+  });
+});
+
+describe('getPaymentFormData(state)', () => {
+  it('returns the payment form data', () => {
+    const state = {
+      cart: ['o2fXhV', 'N0CEFy', 'o2fXhV'],
+      name: 'John Smith',
+      email: 'john.smith@gmail.com',
+      phoneNumber: 1234567890,
+      ccNumber: 440088000,
+    };
+    const result = getPaymentFormData(state);
+    expect(result).toEqual({
+      name: 'John Smith',
+      email: 'john.smith@gmail.com',
+      phoneNumber: 1234567890,
+      ccNumber: 440088000,
+    });
+  });
+});
 
 describe('getNumItemsInCart(state)', () => {
   it('returns the total number of items in the cart', () => {

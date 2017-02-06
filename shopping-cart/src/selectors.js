@@ -39,3 +39,29 @@ export function getItems(state) {
 export function getNumItemsInCart(state) {
   return state.cart.length;
 }
+
+export function getPaymentFormData(state) {
+  const {
+    name,
+    email,
+    phoneNumber,
+    ccNumber,
+  } = state;
+  return {
+    name,
+    email,
+    phoneNumber,
+    ccNumber,
+  };
+}
+
+export function getItemsInCart(state) {
+  return Object.keys(state.items)
+    .filter(itemId => state.cart.includes(itemId))
+    .map(itemId => ({
+      itemId,
+      name: state.items[itemId].name,
+      price: state.items[itemId].price,
+      quantity: getTotalQuantityOfItem(state, itemId),
+    }));
+}
