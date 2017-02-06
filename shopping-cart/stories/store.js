@@ -21,5 +21,9 @@ const items = [
 
 storiesOf('Store', module)
   .add('...', () => (
-    <Store items={items} handleItemClick={action('clicked')}/>
+    <Store
+      items={items}
+      handleItemAddedToCart={action('item added to cart')}
+      handleViewCart={action('view cart requested')}
+    />
   ));

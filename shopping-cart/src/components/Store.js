@@ -1,7 +1,8 @@
 import React from 'react';
+import { Button } from './Button';
 import './Store.css';
 
-function Item({ item, handleItemClick }) {
+function Item({ item, handleItemAddedToCart }) {
   const {
     description,
     img,
@@ -18,19 +19,30 @@ function Item({ item, handleItemClick }) {
         <h2>{name}</h2>
         <h4>{`$ ${price}`}</h4>
         <p>{description}</p>
-        <button onClick={handleItemClick.bind(null, itemId)}>
-          Add To Cart
-        </button>
+        <div style={{ width: '150px' }}>
+          <Button onClick={handleItemAddedToCart.bind(null, itemId)}>
+            Add To Cart
+          </Button>
+        </div>
       </div>
     </div>
   );
 }
 
-export function Store({ items, handleItemClick }) {
+export function Store({ items, handleItemAddedToCart, handleViewCart }) {
   const renderedItems = items.map((item, index) =>
-    <Item key={index} item={item} handleItemClick={handleItemClick} />
+    <Item
+      key={index}
+      item={item}
+      handleItemAddedToCart={handleItemAddedToCart}
+    />
   );
   return (
-    <div id="Store">{ renderedItems }</div>
+    <div id="Store">
+      { renderedItems }
+      <Button onClick={handleViewCart}>
+        View Cart
+      </Button>
+    </div>
   );
 }
