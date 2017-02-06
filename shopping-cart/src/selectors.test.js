@@ -5,7 +5,18 @@ import {
   getFormattedPhoneNumber,
   getFormattedCreditCardNumber,
   getItems,
+  getNumItemsInCart,
 } from './selectors';
+
+describe('getNumItemsInCart(state)', () => {
+  it('returns the total number of items in the cart', () => {
+    const state = {
+      cart: ['o2fXhV', 'N0CEFy', 'o2fXhV'],
+    };
+    const result = getNumItemsInCart(state);
+    expect(result).toBe(3);
+  });
+});
 
 describe('getTotalPricePerItem(state, item)', () => {
   it('sums the total price per item', () => {

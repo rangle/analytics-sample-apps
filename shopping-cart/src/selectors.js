@@ -35,3 +35,7 @@ export function getItems(state) {
     Object.assign({}, state.items[itemId], { itemId })
   );
 }
+
+export function getNumItemsInCart(state) {
+  return state.cart.length;
+}

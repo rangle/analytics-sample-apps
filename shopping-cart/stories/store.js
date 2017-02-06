@@ -18,6 +18,7 @@ const items = [
     description: "Curiosity is a car-sized robotic rover exploring...",
   },
 ];
+const numItemsInCart = 3;
 
 storiesOf('Store', module)
   .add('...', () => (
@@ -25,5 +26,6 @@ storiesOf('Store', module)
       items={items}
       handleItemAddedToCart={action('item added to cart')}
       handleViewCart={action('view cart requested')}
+      numItemsInCart={numItemsInCart}
     />
   ));

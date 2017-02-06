@@ -17,7 +17,7 @@ function Item({ item, handleItemAddedToCart }) {
       </div>
       <div className="info">
         <h2>{name}</h2>
-        <h4>{`$ ${price}`}</h4>
+        <h4>$ {price}</h4>
         <p>{description}</p>
         <div style={{ width: '150px' }}>
           <Button onClick={handleItemAddedToCart.bind(null, itemId)}>
@@ -29,7 +29,12 @@ function Item({ item, handleItemAddedToCart }) {
   );
 }
 
-export function Store({ items, handleItemAddedToCart, handleViewCart }) {
+export function Store({
+  items,
+  handleItemAddedToCart,
+  handleViewCart,
+  numItemsInCart,
+}) {
   const renderedItems = items.map((item, index) =>
     <Item
       key={index}
@@ -39,6 +44,9 @@ export function Store({ items, handleItemAddedToCart, handleViewCart }) {
   );
   return (
     <div id="Store">
+      <div className="items-in-cart-display">
+        Items in Cart: {numItemsInCart}
+      </div>
       { renderedItems }
       <Button onClick={handleViewCart}>
         View Cart

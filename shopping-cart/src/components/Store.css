@@ -11,6 +11,7 @@
   display: flex;
   padding: 10px;
   margin-bottom: 10px;
+  border-radius: 3px;
 }
 
 #Store .Item img {
@@ -24,4 +25,11 @@
 
 #Store .Item h2 {
   margin-top: 0;
+}
+
+#Store .items-in-cart-display {
+  border-bottom: 1px dotted #eee;
+  margin-bottom: 10px;
+  padding: 10px;
+  text-transform: uppercase;
 }
