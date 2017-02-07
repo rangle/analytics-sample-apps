@@ -5,7 +5,24 @@ import {
   EMAIL_ENTERED,
   PHONE_NUMBER_ENTERED,
   CREDIT_CARD_NUMBER_ENTERED,
+  ROUTE_CHANGED,
 } from './action-types';
+
+describe('On ROUTE_CHANGED', () => {
+  it('changes the route property in state', () => {
+    const action = {
+      type: ROUTE_CHANGED,
+      payload: '/cart',
+    };
+    const state = { route: '/' };
+
+    const newState = reducer(state, action);
+
+    expect(newState).toEqual({
+      route: '/cart',
+    });
+  });
+});
 
 describe('On ITEM_ADDED_TO_CART', () => {
   it('adds the item to the cart', () => {

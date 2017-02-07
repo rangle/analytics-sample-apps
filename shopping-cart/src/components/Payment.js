@@ -29,7 +29,7 @@ export function Payment({
         <label>Name:</label>
         <input
           type="text"
-          onInput={handleNameEntered}
+          onChange={handleNameEntered}
           value={name}
           placeholder="John Smith"
         />
@@ -38,7 +38,7 @@ export function Payment({
         <label>Email:</label>
         <input
           type="email"
-          onInput={handleEmailEntered}
+          onChange={handleEmailEntered}
           value={email}
           placeholder="john.smith@gmail.com"
         />
@@ -47,7 +47,7 @@ export function Payment({
         <label>Telephone:</label>
         <input
           type="text"
-          onInput={handlePhoneNumberEntered}
+          onChange={handlePhoneNumberEntered}
           value={phoneNumber}
           placeholder="(123)-456-7890"
         />
@@ -56,7 +56,7 @@ export function Payment({
         <label>Credit Card:</label>
         <input
           type="text"
-          onInput={handleCCNumberEntered}
+          onChange={handleCCNumberEntered}
           value={ccNumber}
           placeholder="4012 8888 8888 1881"
         />

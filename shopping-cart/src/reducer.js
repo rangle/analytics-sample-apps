@@ -4,6 +4,7 @@ import {
   EMAIL_ENTERED,
   PHONE_NUMBER_ENTERED,
   CREDIT_CARD_NUMBER_ENTERED,
+  ROUTE_CHANGED,
 } from './action-types';
 
 const initialState = {
@@ -40,11 +41,14 @@ const initialState = {
   email: '',
   phoneNumber: '',
   ccNumber: '',
+  route: '/',
 };
 
 export function reducer(state = initialState, action) {
   const update = sliceOfState => Object.assign({}, state, sliceOfState);
   switch (action.type) {
+    case ROUTE_CHANGED:
+      return update({ route: action.payload });
     case ITEM_ADDED_TO_CART:
       return update({ cart: state.cart.concat(action.payload) });
     case NAME_ENTERED:

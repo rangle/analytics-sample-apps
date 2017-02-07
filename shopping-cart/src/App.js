@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { createStore, applyMiddleware } from 'redux';
+import { connect, Provider } from 'react-redux';
+import createLogger from 'redux-logger';
+import createHistory from 'history/createBrowserHistory';
+
 import { Store } from './components/Store';
 import { Cart } from './components/Cart';
 import { Payment } from './components/Payment';
 import { OrderComplete } from './components/OrderComplete';
-import { createStore, applyMiddleware } from 'redux';
-import { connect, Provider } from 'react-redux';
-import { routerMiddleware, push } from 'react-router-redux';
-import createLogger from 'redux-logger';
 import { reducer } from './reducer';
 import {
   getItems,
@@ -22,39 +22,52 @@ import {
   emailEntered,
   phoneNumberEntered,
   creditCardNumberEntered,
+  changeRoute,
 } from './action-creators';
 
 import './App.css';
 
-const middlewareRouter = routerMiddleware(browserHistory);
-const middlewareLogger = createLogger();
 const store = createStore(
   reducer,
-  applyMiddleware(middlewareRouter, middlewareLogger)
+  applyMiddleware(createLogger())
 );
 
-const connectedStore = connect(
+// Set up router
+const history = createHistory();
+// for the initial load, update the state to match the requested route
+store.dispatch(changeRoute(history.location.pathname));
+// if the user updates the route manually, update the route in state
+history.listen(location => store.dispatch(changeRoute(location.pathname)));
+// update the route whenever the route changes in state
+store.subscribe(() => {
+  const route = store.getState().route;
+  if (route !== history.location.pathname) {
+    history.push(route);
+  }
+});
+
+const ConnectedStore = connect(
   state => ({
     items: getItems(state),
     numItemsInCart: getNumItemsInCart(state),
   }),
   dispatch => ({
     handleItemAddedToCart: itemId => dispatch(itemAddedToCart(itemId)),
-    handleViewCart: () => dispatch(push('/cart')),
+    handleViewCart: () => dispatch(changeRoute('/cart')),
   })
 )(Store);
 
-const connectedCart = connect(
+const ConnectedCart = connect(
   state => ({
     total: getTotalPriceInCart(state),
     itemsInCart: getItemsInCart(state),
   }),
   dispatch => ({
-    handleCheckout: () => dispatch(push('/payment')),
+    handleCheckout: () => dispatch(changeRoute('/payment')),
   })
 )(Cart);
 
-const connectedPayment = connect(
+const ConnectedPayment = connect(
   state => ({
     formData: getPaymentFormData(state),
   }),
@@ -63,21 +76,35 @@ const connectedPayment = connect(
     onEmailEntered: email => dispatch(emailEntered(email)),
     onPhoneNumberEntered: phoneNumber => dispatch(phoneNumberEntered(phoneNumber)),
     onCCNumberEntered: ccNumber => dispatch(creditCardNumberEntered(ccNumber)),
-    handleBuyNow: () => dispatch(push('/order-complete'))
+    handleBuyNow: () => dispatch(changeRoute('/order-complete'))
   })
 )(Payment);
+
+const Routes = connect(
+  state => ({ route: state.route })
+)(
+  function Router ({ route }) {
+    switch(route) {
+      case '/':
+        return <ConnectedStore />;
+      case '/cart':
+        return <ConnectedCart />;
+      case '/payment':
+        return <ConnectedPayment />;
+      case '/order-complete':
+        return <OrderComplete />;
+      default:
+        return <h1>Page Not Found</h1>;
+    }
+  }
+);
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <div className="App">
-          <Router history={browserHistory}>
-            <Route path="/" component={connectedStore} />
-            <Route path="/cart" component={connectedCart} />
-            <Route path="/payment" component={connectedPayment} />
-            <Route path="/order-complete" component={OrderComplete} />
-          </Router>
+          <Routes />
         </div>
       </Provider>
     );

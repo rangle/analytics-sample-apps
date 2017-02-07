@@ -4,6 +4,7 @@ import {
   emailEntered,
   phoneNumberEntered,
   creditCardNumberEntered,
+  changeRoute,
 } from './action-creators';
 import {
   ITEM_ADDED_TO_CART,
@@ -11,7 +12,19 @@ import {
   EMAIL_ENTERED,
   PHONE_NUMBER_ENTERED,
   CREDIT_CARD_NUMBER_ENTERED,
+  ROUTE_CHANGED,
 } from './action-types';
+
+describe('changeRoute(newRoute)', () => {
+  it('creates the correct redux action', () => {
+    const newRoute = '/cart';
+    const action = changeRoute(newRoute);
+    expect(action).toEqual({
+      type: ROUTE_CHANGED,
+      payload: newRoute,
+    });
+  });
+});
 
 describe('itemAddedToCart(itemId)', () => {
   it('creates the correct redux action', () => {
