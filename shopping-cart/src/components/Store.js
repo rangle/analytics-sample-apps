@@ -13,7 +13,7 @@ function Item({ item, handleItemAddedToCart }) {
   return (
     <div className="Item">
       <div>
-        <img src={img} />
+        <img src={img} alt={name} />
       </div>
       <div className="info">
         <h2>{name}</h2>
@@ -45,7 +45,9 @@ export function Store({
   return (
     <div id="Store">
       <div className="items-in-cart-display">
-        Items in Cart: {numItemsInCart}
+        <h3>
+          Items in Cart <div className="items-in-cart-count">{numItemsInCart}</div>
+        </h3>
       </div>
       { renderedItems }
       <Button onClick={handleViewCart}>

@@ -7,6 +7,7 @@ import { OrderComplete } from './components/OrderComplete';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import { routerMiddleware, push } from 'react-router-redux';
+import createLogger from 'redux-logger';
 import { reducer } from './reducer';
 import {
   getItems,
@@ -26,7 +27,11 @@ import {
 import './App.css';
 
 const middlewareRouter = routerMiddleware(browserHistory);
-const store = createStore(reducer, applyMiddleware(middlewareRouter));
+const middlewareLogger = createLogger();
+const store = createStore(
+  reducer,
+  applyMiddleware(middlewareRouter, middlewareLogger)
+);
 
 const connectedStore = connect(
   state => ({

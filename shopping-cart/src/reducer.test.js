@@ -87,12 +87,12 @@ describe('On PHONE_NUMBER_ENTERED', () => {
       type: PHONE_NUMBER_ENTERED,
       payload: '(403)-708-820'
     };
-    const state = { phoneNumber: 40370882 };
+    const state = { phoneNumber: '40370882' };
 
     const newState = reducer(state, action);
 
     expect(newState).toEqual({
-      phoneNumber: 403708820,
+      phoneNumber: '403708820',
     });
   });
 });
@@ -101,14 +101,14 @@ describe('On CREDIT_CARD_NUMBER_ENTERED', () => {
   it('updates the state with the credit card number', () => {
     const action = {
       type: CREDIT_CARD_NUMBER_ENTERED,
-      payload: '4400 8800',
+      payload: '4898 8888 88',
     };
     const state = { ccNumber: 4400880 };
 
     const newState = reducer(state, action);
 
     expect(newState).toEqual({
-      ccNumber: 44008800
+      ccNumber: '4898888888',
     });
   });
 });

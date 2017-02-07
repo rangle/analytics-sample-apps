@@ -52,12 +52,14 @@ export function reducer(state = initialState, action) {
     case EMAIL_ENTERED:
       return update({ email: action.payload.toLowerCase() });
     case PHONE_NUMBER_ENTERED: {
-      const phoneNumber = parseInt(action.payload.split('').reduce((result, value) =>
-        !isNaN(value) ? result + value : result, ''), 10);
+      const phoneNumber = action.payload
+        .split('')
+        .filter(letter => !isNaN(letter))
+        .join('');
       return update({ phoneNumber });
     }
     case CREDIT_CARD_NUMBER_ENTERED:
-      return update({ ccNumber: parseInt(action.payload.replace(' ', ''), 10) });
+      return update({ ccNumber: action.payload.replace(/\s/g, '') });
     default:
       return state;
   }

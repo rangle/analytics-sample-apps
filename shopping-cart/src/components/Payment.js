@@ -27,19 +27,39 @@ export function Payment({
       <h1>Payment</h1>
       <div className="field">
         <label>Name:</label>
-        <input type="text" onInput={handleNameEntered} value={name} />
+        <input
+          type="text"
+          onInput={handleNameEntered}
+          value={name}
+          placeholder="John Smith"
+        />
       </div>
       <div className="field">
         <label>Email:</label>
-        <input type="text" onInput={handleEmailEntered} value={email} />
+        <input
+          type="email"
+          onInput={handleEmailEntered}
+          value={email}
+          placeholder="john.smith@gmail.com"
+        />
       </div>
       <div className="field">
         <label>Telephone:</label>
-        <input type="text" onInput={handlePhoneNumberEntered} value={phoneNumber} />
+        <input
+          type="text"
+          onInput={handlePhoneNumberEntered}
+          value={phoneNumber}
+          placeholder="(123)-456-7890"
+        />
       </div>
       <div className="field">
         <label>Credit Card:</label>
-        <input type="text" onInput={handleCCNumberEntered} value={ccNumber} />
+        <input
+          type="text"
+          onInput={handleCCNumberEntered}
+          value={ccNumber}
+          placeholder="4012 8888 8888 1881"
+        />
       </div>
       <Button onClick={handleBuyNow}>
         Buy Now

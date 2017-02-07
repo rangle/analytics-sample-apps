@@ -55,8 +55,8 @@ describe('getPaymentFormData(state)', () => {
       cart: ['o2fXhV', 'N0CEFy', 'o2fXhV'],
       name: 'John Smith',
       email: 'john.smith@gmail.com',
-      phoneNumber: 1234567890,
-      ccNumber: 44008800,
+      phoneNumber: '1234567890',
+      ccNumber: '44008800',
     };
     const result = getPaymentFormData(state);
     expect(result).toEqual({
@@ -114,7 +114,17 @@ describe('getTotalPriceInCart(state)', () => {
       },
     };
     const result = getTotalPriceInCart(state);
-    expect(result).toBe(30.6);
+    expect(result).toEqual('30.60');
+  });
+  it('rounds the total to the nearest 10th decimal', () => {
+    const state = {
+      cart: ['o2fXhV'],
+      items: {
+        'o2fXhV': { price: 14.3333 },
+      },
+    };
+    const result = getTotalPriceInCart(state);
+    expect(result).toBe('14.33');
   });
 });
 
@@ -122,7 +132,7 @@ describe('getFormattedPhoneNumber(state)', () => {
   describe('When the number is complete', () => {
     it('returns the formatted phone number', () => {
       const state = {
-        phoneNumber: 4037081234,
+        phoneNumber: '4037081234',
       };
       const result = getFormattedPhoneNumber(state);
       expect(result).toEqual('(403)-708-1234');
@@ -131,7 +141,7 @@ describe('getFormattedPhoneNumber(state)', () => {
   describe('When only the first two numbers have been entered', () => {
     it('returns the unformatted phone number as a string', () => {
       const state = {
-        phoneNumber: 40,
+        phoneNumber: '40',
       };
       const result = getFormattedPhoneNumber(state);
       expect(result).toEqual('40');
@@ -140,16 +150,16 @@ describe('getFormattedPhoneNumber(state)', () => {
   describe('When the first three numbers have been entered', () => {
     it('returns the formatted phone number', () => {
       const state = {
-        phoneNumber: 403,
+        phoneNumber: '403',
       };
       const result = getFormattedPhoneNumber(state);
-      expect(result).toEqual('(403)');
+      expect(result).toEqual('403');
     });
   });
   describe('When the fourth number is entered', () => {
     it('returns the formatted phone number', () => {
       const state = {
-        phoneNumber: 4037,
+        phoneNumber: '4037',
       };
       const result = getFormattedPhoneNumber(state);
       expect(result).toEqual('(403)-7');
@@ -158,7 +168,7 @@ describe('getFormattedPhoneNumber(state)', () => {
   describe('When the seventh number is entered', () => {
     it('returns the formatted phone number', () => {
       const state = {
-        phoneNumber: 4037088,
+        phoneNumber: '4037088',
       };
       const result = getFormattedPhoneNumber(state);
       expect(result).toEqual('(403)-708-8');
@@ -169,7 +179,7 @@ describe('getFormattedPhoneNumber(state)', () => {
 describe('getFormattedCreditCardNumber(state)', () => {
   it('separates the number it groups of four', () => {
     const state = {
-      ccNumber: 123456789,
+      ccNumber: '123456789',
     };
     const result = getFormattedCreditCardNumber(state);
     expect(result).toEqual('1234 5678 9');
