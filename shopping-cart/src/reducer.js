@@ -56,10 +56,7 @@ export function reducer(state = initialState, action) {
     case EMAIL_ENTERED:
       return update({ email: action.payload.toLowerCase() });
     case PHONE_NUMBER_ENTERED: {
-      const phoneNumber = action.payload
-        .split('')
-        .filter(letter => !isNaN(letter))
-        .join('');
+      const phoneNumber = action.payload.replace(/(\s|[^\d])/g, '').slice(0, 10);
       return update({ phoneNumber });
     }
     case CREDIT_CARD_NUMBER_ENTERED:

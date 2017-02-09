@@ -21,10 +21,10 @@ export function getFormattedPhoneNumber(state) {
   if (phoneNumber.length < 4) {
     return phoneNumber;
   }
-  const areaCode = phoneNumber.slice(0, 3);
-  const secondPart = phoneNumber.slice(3, 6);
-  const thirdPart = phoneNumber.slice(6, 10);
-  return [`(${areaCode})`, secondPart, thirdPart].filter(part => part.length > 0).join('-');
+  const part1 = phoneNumber.slice(0, 3);
+  const part2 = phoneNumber.slice(3, 6);
+  const part3 = phoneNumber.slice(6, 10);
+  return part3.length > 0 ? `(${part1}) ${part2}-${part3}` : `(${part1}) ${part2}`;
 }
 
 export function getFormattedCreditCardNumber(state) {

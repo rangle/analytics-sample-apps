@@ -37,7 +37,11 @@ const history = createHistory();
 // for the initial load, update the state to match the requested route
 store.dispatch(changeRoute(history.location.pathname));
 // if the user updates the route manually, update the route in state
-history.listen(location => store.dispatch(changeRoute(location.pathname)));
+history.listen(location => {
+  if (location.pathname !== store.getState().route) {
+    store.dispatch(changeRoute(location.pathname));
+  }
+});
 // update the route whenever the route changes in state
 store.subscribe(() => {
   const route = store.getState().route;

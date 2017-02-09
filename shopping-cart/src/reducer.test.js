@@ -99,17 +99,50 @@ describe('On EMAIL_ENTERED', () => {
 });
 
 describe('On PHONE_NUMBER_ENTERED', () => {
-  it('updates the state with the number entered', () => {
+  it('updates the state with the entered phone number', () => {
+    const prevState = { phoneNumber: '' };
     const action = {
-      type: PHONE_NUMBER_ENTERED,
-      payload: '(403)-708-820'
+      type: 'PHONE_NUMBER_ENTERED',
+      payload: '123',
     };
-    const state = { phoneNumber: '40370882' };
-
-    const newState = reducer(state, action);
-
+    const newState = reducer(prevState, action);
     expect(newState).toEqual({
-      phoneNumber: '403708820',
+      phoneNumber: '123',
+    });
+  });
+  describe('when a letter is entered', () => {
+    it('ignores the letter', () => {
+      const prevState = { phoneNumber: '123' };
+      const action = {
+        type: 'PHONE_NUMBER_ENTERED',
+        payload: '123a',
+      };
+      const newState = reducer(prevState, action);
+      expect(newState).toEqual(prevState);
+    });
+  });
+  describe('when with formatting is entered', () => {
+    it('strips away all the formatting', () => {
+      const prevState = { phoneNumber: '1234567' };
+      const action = {
+        type: 'PHONE_NUMBER_ENTERED',
+        payload: '(123) 456-78'
+      };
+      const newState = reducer(prevState, action);
+      expect(newState).toEqual({
+        phoneNumber: '12345678',
+      });
+    });
+  });
+  describe('when more than 10 digits are entered', () => {
+    it('ignores anything past the 10th digit', () => {
+      const prevState = { phoneNumber: '1234567890' };
+      const action = {
+        type: 'PHONE_NUMBER_ENTERED',
+        payload: '(123) 456-78909'
+      };
+      const newState = reducer(prevState, action);
+      expect(newState).toEqual(prevState);
     });
   });
 });

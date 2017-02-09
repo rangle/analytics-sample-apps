@@ -62,7 +62,7 @@ describe('getPaymentFormData(state)', () => {
     expect(result).toEqual({
       name: 'John Smith',
       email: 'john.smith@gmail.com',
-      phoneNumber: '(123)-456-7890',
+      phoneNumber: '(123) 456-7890',
       ccNumber: '4400 8800',
     });
   });
@@ -129,49 +129,32 @@ describe('getTotalPriceInCart(state)', () => {
 });
 
 describe('getFormattedPhoneNumber(state)', () => {
-  describe('When the number is complete', () => {
-    it('returns the formatted phone number', () => {
-      const state = {
-        phoneNumber: '4037081234',
-      };
-      const result = getFormattedPhoneNumber(state);
-      expect(result).toEqual('(403)-708-1234');
+  describe('for a three digit number: 123', () => {
+    it('does not do any formatting: 123', () => {
+      const state = { phoneNumber: '123' };
+      const phoneNumber = getFormattedPhoneNumber(state);
+      expect(phoneNumber).toEqual('123');
     });
   });
-  describe('When only the first two numbers have been entered', () => {
-    it('returns the unformatted phone number as a string', () => {
-      const state = {
-        phoneNumber: '40',
-      };
-      const result = getFormattedPhoneNumber(state);
-      expect(result).toEqual('40');
+  describe('for a four digit number: 1234', () => {
+    it('adds a space and some parens: (123) 4', () => {
+      const state = { phoneNumber: '1234' };
+      const phoneNumber = getFormattedPhoneNumber(state);
+      expect(phoneNumber).toEqual('(123) 4');
     });
   });
-  describe('When the first three numbers have been entered', () => {
-    it('returns the formatted phone number', () => {
-      const state = {
-        phoneNumber: '403',
-      };
-      const result = getFormattedPhoneNumber(state);
-      expect(result).toEqual('403');
+  describe('for a 7 digit number: 1234567', () => {
+    it('adds a dash: (123) 456-7', () => {
+      const state = { phoneNumber: '1234567' };
+      const phoneNumber = getFormattedPhoneNumber(state);
+      expect(phoneNumber).toEqual('(123) 456-7');
     });
   });
-  describe('When the fourth number is entered', () => {
-    it('returns the formatted phone number', () => {
-      const state = {
-        phoneNumber: '4037',
-      };
-      const result = getFormattedPhoneNumber(state);
-      expect(result).toEqual('(403)-7');
-    });
-  });
-  describe('When the seventh number is entered', () => {
-    it('returns the formatted phone number', () => {
-      const state = {
-        phoneNumber: '4037088',
-      };
-      const result = getFormattedPhoneNumber(state);
-      expect(result).toEqual('(403)-708-8');
+  describe('for a 10 digit number: 1234567890', () => {
+    it('is completely formatted: (123) 456-7890', () => {
+      const state = { phoneNumber: '1234567890' };
+      const phoneNumber = getFormattedPhoneNumber(state);
+      expect(phoneNumber).toEqual('(123) 456-7890');
     });
   });
 });
