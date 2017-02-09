@@ -9,6 +9,7 @@ import { Cart } from './components/Cart';
 import { Payment } from './components/Payment';
 import { OrderComplete } from './components/OrderComplete';
 import { reducer } from './reducer';
+import { middleware as analyticsMiddleware } from './analytics/middleware';
 import {
   getItems,
   getNumItemsInCart,
@@ -33,7 +34,7 @@ import './App.css';
 
 const store = createStore(
   reducer,
-  applyMiddleware(createLogger())
+  applyMiddleware(createLogger(), analyticsMiddleware)
 );
 
 // Set up router
