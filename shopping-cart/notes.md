@@ -20,6 +20,7 @@
     * cc number entered
     * ? Create Funnel Report on Google Analytics
   * Want to track analytics events even when the user loses connection
+  * Want to unit test analytics events.
 
 # Instructor Notes
   * continuously refer to docs
