@@ -9,8 +9,15 @@ const formData = {
   ccNumber: '4400 8800',
 };
 
+const validationData = {
+  isNameValid: false,
+  isEmailValid: false,
+  isPhoneNumberValid: false,
+  isCCNumberValid: false,
+};
+
 storiesOf('Payment', module)
-  .add('...', () => (
+  .add('default', () => (
     <Payment
       onNameEntered={action('name entered')}
       onEmailEntered={action('email entered')}
@@ -18,5 +25,16 @@ storiesOf('Payment', module)
       onCCNumberEntered={action('credit card number entered')}
       handleBuyNow={action('buy now button clicked')}
       formData={formData}
+    />
+  ))
+  .add('with validation errors', () => (
+    <Payment
+      onNameEntered={action('name entered')}
+      onEmailEntered={action('email entered')}
+      onPhoneNumberEntered={action('phone number entered')}
+      onCCNumberEntered={action('credit card number entered')}
+      handleBuyNow={action('buy now button clicked')}
+      formData={formData}
+      validationData={validationData}
     />
   ));
