@@ -37,4 +37,15 @@ storiesOf('Payment', module)
       formData={formData}
       validationData={validationData}
     />
+  ))
+  .add('with buy now disabled', () => (
+    <Payment
+      onNameEntered={action('name entered')}
+      onEmailEntered={action('email entered')}
+      onPhoneNumberEntered={action('phone number entered')}
+      onCCNumberEntered={action('credit card number entered')}
+      handleBuyNow={action('buy now button clicked')}
+      formData={formData}
+      isBuyNowDisabled={false}
+    />
   ));

@@ -9,6 +9,13 @@ export function Payment({
   onCCNumberEntered,
   handleBuyNow,
   formData,
+  isBuyNowDisabled = true,
+  validationData = {
+    isNameValid: true,
+    isEmailValid: true,
+    isPhoneNumberValid: true,
+    isCCNumberValid: true,
+  },
 }) {
   const {
     name,
@@ -29,6 +36,7 @@ export function Payment({
         <label>Name:</label>
         <input
           type="text"
+          className={validationData.isNameValid ? 'valid' : 'invalid'}
           onChange={handleNameEntered}
           value={name}
           placeholder="John Smith"
@@ -38,6 +46,7 @@ export function Payment({
         <label>Email:</label>
         <input
           type="email"
+          className={validationData.isEmailValid ? 'valid' : 'invalid'}
           onChange={handleEmailEntered}
           value={email}
           placeholder="john.smith@gmail.com"
@@ -47,6 +56,7 @@ export function Payment({
         <label>Telephone:</label>
         <input
           type="text"
+          className={validationData.isPhoneNumberValid ? 'valid' : 'invalid'}
           onChange={handlePhoneNumberEntered}
           value={phoneNumber}
           placeholder="(123)-456-7890"
@@ -56,12 +66,13 @@ export function Payment({
         <label>Credit Card:</label>
         <input
           type="text"
+          className={validationData.isCCNumberValid ? 'valid' : 'invalid'}
           onChange={handleCCNumberEntered}
           value={ccNumber}
           placeholder="4012 8888 8888 1881"
         />
       </div>
-      <Button onClick={handleBuyNow}>
+      <Button onClick={handleBuyNow} disabled={isBuyNowDisabled}>
         Buy Now
       </Button>
     </div>

@@ -14,10 +14,20 @@
   padding-right: 10px;
 }
 
+.invalid {
+  border: 1px solid #fdabab;
+  color: red;
+}
+
+.valid {
+  border: 1px solid #ccc;
+}
+
 #Payment .field input {
+  border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
-  width: 100%;
-  padding: 15px;
   margin: 5px 0;
+  padding: 15px;
+  width: 100%;
 }
