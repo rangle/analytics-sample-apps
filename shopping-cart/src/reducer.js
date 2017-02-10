@@ -60,7 +60,7 @@ export function reducer(state = initialState, action) {
       return update({ phoneNumber });
     }
     case CREDIT_CARD_NUMBER_ENTERED:
-      return update({ ccNumber: action.payload.replace(/\s/g, '') });
+      return update({ ccNumber: action.payload.replace(/(\s|[^\d])/g, '').slice(0, 16) });
     default:
       return state;
   }

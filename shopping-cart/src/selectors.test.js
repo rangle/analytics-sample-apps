@@ -8,6 +8,10 @@ import {
   getNumItemsInCart,
   getPaymentFormData,
   getItemsInCart,
+  isEmailValid,
+  isPhoneNumberValid,
+  isCreditCardNumberValid,
+  isBuyNowDisabled,
 } from './selectors';
 
 describe('getItemsInCart(state)', () => {
@@ -206,5 +210,144 @@ describe('getItems(state)', () => {
         description: "Curiosity is a car-sized robotic rover exploring...",
       },
     ]);
+  });
+});
+
+describe('isEmailValid(state)', () => {
+  describe('when the email is an empty string', () => {
+    it('returns true', () => {
+      const email = '';
+      const result = isEmailValid(email);
+      expect(result).toBe(true);
+    });
+  });
+  describe('when the email is "john"', () => {
+    it('returns false', () => {
+      const email = 'john';
+      const result = isEmailValid(email);
+      expect(result).toBe(false);
+    });
+  });
+  describe('when the email is "john@whatever.', () => {
+    it('returns false', () => {
+      const email = 'john@whatever';
+      const result = isEmailValid(email);
+      expect(result).toBe(false);
+    });
+  });
+  describe('when the email is "john@whatever.com"', () => {
+    it('returns true', () => {
+      const email = 'john@whatever.com';
+      const result = isEmailValid(email);
+      expect(result).toBe(true);
+    });
+  });
+});
+
+describe('isPhoneNumberValid(phoneNumber)', () => {
+  describe('when the phone number is an empty string', () => {
+    it('returns true', () => {
+      const phoneNumber = '';
+      const result = isPhoneNumberValid(phoneNumber);
+      expect(result).toBe(true);
+    });
+  });
+  describe('when the phone number is \"123\"', () => {
+    it('returns false', () => {
+      const phoneNumber = '123';
+      const result = isPhoneNumberValid(phoneNumber);
+      expect(result).toBe(false);
+    });
+  });
+  describe('when the phone number is \"1234567890\"', () => {
+    it('returns true', () => {
+      const phoneNumber = '1234567890';
+      const result = isPhoneNumberValid(phoneNumber);
+      expect(result).toBe(true);
+    });
+  });
+});
+
+describe('isCreditCardNumberValid(ccNumber)', () => {
+  describe('when the cc number is an empty string', () => {
+    it('returns true', () => {
+      const ccNumber = '';
+      const result = isCreditCardNumberValid(ccNumber);
+      expect(result).toBe(true);
+    });
+  });
+  describe('when the cc number is less than 16 digits', () => {
+    it('returns false', () => {
+      const ccNumber = '440088000';
+      const result = isCreditCardNumberValid(ccNumber);
+      expect(result).toBe(false);
+    });
+  });
+  describe('when the cc number is 16 digits', () => {
+    it('returns true', () => {
+      const ccNumber = '4716093059454647';
+      const result = isCreditCardNumberValid(ccNumber);
+      expect(result).toBe(true);
+    });
+  });
+});
+
+describe('isBuyNowDisabled(state, validationData)', () => {
+  describe('when the name, email, telephone, cc number are blank', () => {
+    it('returns true', () => {
+      const state = { name: '', email: '', phoneNumber: '', ccNumber: '' };
+      const result = isBuyNowDisabled(state);
+      expect(result).toBe(true);
+    });
+  });
+  describe('when the form is filled with non empty strings', () => {
+    describe('when there is a validation error with the email', () => {
+      it('returns true', () => {
+        const state = { name: 'a', email: 'b', phoneNumber: 'c', ccNumber: 'd' };
+        const validationData = {
+          isEmailValid: false,
+          isPhoneNumberValid: true,
+          isCCNumberValid: true,
+        };
+        const result = isBuyNowDisabled(state, validationData);
+        expect(result).toBe(true);
+      });
+    });
+    describe('when there is a validation error with the phone number', () => {
+      it('returns true', () => {
+        const state = { name: 'a', email: 'b', phoneNumber: 'c', ccNumber: 'd' };
+        const validationData = {
+          isEmailValid: true,
+          isPhoneNumberValid: false,
+          isCCNumberValid: true,
+        };
+        const result = isBuyNowDisabled(state, validationData);
+        expect(result).toBe(true);
+      });
+    });
+    describe('when there is a validation error with the cc number', () => {
+      it('returns true', () => {
+        const state = { name: 'a', email: 'b', phoneNumber: 'c', ccNumber: 'd' };
+        const validationData = {
+          isEmailValid: true,
+          isPhoneNumberValid: true,
+          isCCNumberValid: false,
+        };
+        const result = isBuyNowDisabled(state, validationData);
+        expect(result).toBe(true);
+      });
+    });
+    describe('when there are no validation errors', () => {
+      it('returns false', () => {
+        const state = { name: 'a', email: 'b', phoneNumber: 'c', ccNumber: 'd' };
+        const validationData = {
+          isEmailValid: true,
+          isPhoneNumberValid: true,
+          isCCNumberValid: true,
+        };
+        const result = isBuyNowDisabled(state, validationData);
+        expect(result).toBe(false);
+      });
+    });
   });
 });

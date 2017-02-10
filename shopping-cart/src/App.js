@@ -15,6 +15,10 @@ import {
   getTotalPriceInCart,
   getItemsInCart,
   getPaymentFormData,
+  isEmailValid,
+  isPhoneNumberValid,
+  isCreditCardNumberValid,
+  isBuyNowDisabled,
 } from './selectors';
 import {
   itemAddedToCart,
@@ -72,9 +76,19 @@ const ConnectedCart = connect(
 )(Cart);
 
 const ConnectedPayment = connect(
-  state => ({
-    formData: getPaymentFormData(state),
-  }),
+  state => {
+    const validationData = {
+      isNameValid: true,
+      isEmailValid: isEmailValid(state.email),
+      isPhoneNumberValid: isPhoneNumberValid(state.phoneNumber),
+      isCCNumberValid: isCreditCardNumberValid(state.ccNumber),
+    };
+    return {
+      validationData,
+      formData: getPaymentFormData(state),
+      isBuyNowDisabled: isBuyNowDisabled(state, validationData),
+    };
+  },
   dispatch => ({
     onNameEntered: name => dispatch(nameEntered(name)),
     onEmailEntered: email => dispatch(emailEntered(email)),

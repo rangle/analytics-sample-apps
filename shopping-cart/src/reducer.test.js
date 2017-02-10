@@ -161,4 +161,34 @@ describe('On CREDIT_CARD_NUMBER_ENTERED', () => {
       ccNumber: '4898888888',
     });
   });
+  describe('when the credit card number length is greater than 16', () => {
+    it('does not add the extra digits to state', () => {
+      const action = {
+        type: CREDIT_CARD_NUMBER_ENTERED,
+        payload: '4898 8888 8888 8888 9',
+      };
+      const state = { ccNumber: '4898888888888888' };
+
+      const newState = reducer(state, action);
+
+      expect(newState).toEqual({
+        ccNumber: '4898888888888888',
+      });
+    });
+  });
+  describe('when a non-digit is entered', () => {
+    it('does not add the non-digit to state', () => {
+      const action = {
+        type: CREDIT_CARD_NUMBER_ENTERED,
+        payload: '4898 8888 8888 88j',
+      };
+      const state = { ccNumber: '48988888888888' };
+
+      const newState = reducer(state, action);
+
+      expect(newState).toEqual({
+        ccNumber: '48988888888888',
+      });
+    });
+  });
 });

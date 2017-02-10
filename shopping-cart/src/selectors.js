@@ -66,3 +66,27 @@ export function getItemsInCart(state) {
       quantity: getTotalQuantityOfItem(state, itemId),
     }));
 }
+
+const isNonEmptyString = value => typeof value === 'string' && value.length > 0;
+
+export function isEmailValid(email) {
+  return isNonEmptyString(email) ? /[^\s]+@[^\s]+\.[^\s]+/g.test(email) : true;
+}
+
+export function isPhoneNumberValid(phoneNumber) {
+  return isNonEmptyString(phoneNumber) ? phoneNumber.length === 10 : true;
+}
+
+export function isCreditCardNumberValid(ccNumber) {
+  return isNonEmptyString(ccNumber) ? ccNumber.length === 16 : true;
+}
+
+export function isBuyNowDisabled(state, validationData) {
+  const hasEmptyFields = ['name', 'email', 'phoneNumber', 'ccNumber']
+    .some(field => !isNonEmptyString(state[field]));
+
+  if (hasEmptyFields) {
+    return true;
+  }
+  return !Object.keys(validationData).every(key => validationData[key]);
+}
