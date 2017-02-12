@@ -8,6 +8,7 @@ export function Payment({
   onPhoneNumberEntered,
   onCCNumberEntered,
   handleBuyNow,
+  handleBuyNowDisabled,
   formData,
   isBuyNowDisabled = true,
   validationData = {
@@ -72,7 +73,11 @@ export function Payment({
           placeholder="4012 8888 8888 1881"
         />
       </div>
-      <Button onClick={handleBuyNow} disabled={isBuyNowDisabled}>
+      <Button
+        onClick={handleBuyNow}
+        disabled={isBuyNowDisabled}
+        onDisabledClick={handleBuyNowDisabled}
+      >
         Buy Now
       </Button>
     </div>

@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.button:disabled {
+.button.disabled {
   background-color: rgba(63, 81, 181, 0.61);
   cursor: default;
 }

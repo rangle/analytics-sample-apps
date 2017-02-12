@@ -1,9 +1,13 @@
 import React from 'react';
 import './Button.css';
 
-export function Button ({ onClick, disabled, children }) {
+export function Button ({ onClick, onDisabledClick, disabled, children }) {
+  const classes = disabled ? 'button disabled' : 'button';
   return (
-    <button className="button" onClick={onClick} disabled={disabled}>
+    <button
+      className={classes}
+      onClick={disabled ? onDisabledClick : onClick}
+    >
       {children}
     </button>
   );

@@ -23,8 +23,9 @@ storiesOf('Payment', module)
       onEmailEntered={action('email entered')}
       onPhoneNumberEntered={action('phone number entered')}
       onCCNumberEntered={action('credit card number entered')}
-      handleBuyNow={action('buy now button clicked')}
+      handleBuyNow={action('handleBuyNow called')}
       formData={formData}
+      isBuyNowDisabled={false}
     />
   ))
   .add('with validation errors', () => (
@@ -33,9 +34,11 @@ storiesOf('Payment', module)
       onEmailEntered={action('email entered')}
       onPhoneNumberEntered={action('phone number entered')}
       onCCNumberEntered={action('credit card number entered')}
-      handleBuyNow={action('buy now button clicked')}
+      handleBuyNow={action('handleBuyNow called')}
+      handleBuyNowDisabled={action('handleBuyNowDisabled called')}
       formData={formData}
       validationData={validationData}
+      isBuyNowDisabled={true}
     />
   ))
   .add('with buy now disabled', () => (
@@ -44,8 +47,9 @@ storiesOf('Payment', module)
       onEmailEntered={action('email entered')}
       onPhoneNumberEntered={action('phone number entered')}
       onCCNumberEntered={action('credit card number entered')}
-      handleBuyNow={action('buy now button clicked')}
+      handleBuyNow={action('handleBuyNow called')}
+      handleBuyNowDisabled={action('handleBuyNowDisabled called')}
       formData={formData}
-      isBuyNowDisabled={false}
+      isBuyNowDisabled={true}
     />
   ));
