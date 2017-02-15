@@ -5,12 +5,20 @@ export const pageview = {
   }),
 };
 
-export const itemAddedToCart = {
-  eventFields: (action, prevState) => (
-    prevState.cart.length > 0 ? {} : { hitType: 'pageview', page: '/item-added-to-cart'}
-  ),
-  eventSchema: {
-    hitType: value => value === 'pageview',
-    page: value => value !== undefined,
-  }
-};
+export function createVirtualPageView(fieldName, page) {
+  return {
+    eventFields: (_, prevState) => ({
+      hitType: 'pageview',
+      page: prevState[fieldName].length === 0 ? page : '',
+    }),
+    eventSchema: {
+      page: value => value === page,
+    },
+  };
+}
+
+export const itemAddedToCart = createVirtualPageView('cart', '/item-added-to-cart');
+export const nameEntered = createVirtualPageView('name', '/name-entered');
+export const emailEntered = createVirtualPageView('email', '/email-entered');
+export const phoneNumberEntered = createVirtualPageView('phoneNumber', '/phone-number-entered');
+export const ccNumberEntered = createVirtualPageView('ccNumber', '/cc-number-entered');
