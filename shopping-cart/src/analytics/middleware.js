@@ -8,6 +8,7 @@ import {
   emailEntered,
   phoneNumberEntered,
   ccNumberEntered,
+  buyNowAttempted,
 } from './event-definitions';
 import {
   ROUTE_CHANGED,
@@ -25,6 +26,7 @@ const eventsMap = {
   [EMAIL_ENTERED]: emailEntered,
   [PHONE_NUMBER_ENTERED]: phoneNumberEntered,
   [CREDIT_CARD_NUMBER_ENTERED]: ccNumberEntered,
+  DISABLED_BUY_NOW_CLICKED: buyNowAttempted,
 };
 
 export const middleware = createMiddleware(eventsMap, GoogleAnalytics, { logger });
