@@ -94,7 +94,8 @@ const ConnectedPayment = connect(
     onEmailEntered: email => dispatch(emailEntered(email)),
     onPhoneNumberEntered: phoneNumber => dispatch(phoneNumberEntered(phoneNumber)),
     onCCNumberEntered: ccNumber => dispatch(creditCardNumberEntered(ccNumber)),
-    handleBuyNow: () => dispatch(changeRoute('/order-complete'))
+    handleBuyNow: () => dispatch(changeRoute('/order-complete')),
+    handleBuyNowDisabled: () => dispatch({ type: 'BUY_NOW_ATTEMPTED' }),
   })
 )(Payment);
 
