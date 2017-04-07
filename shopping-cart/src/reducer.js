@@ -41,7 +41,7 @@ const initialState = {
   email: '',
   phoneNumber: '',
   ccNumber: '',
-  route: '/',
+  route: '',
 };
 
 export function reducer(state = initialState, action) {
